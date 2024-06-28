@@ -1,0 +1,21 @@
+NAME = so_long
+
+CC = cc
+
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
+
+SRC = parce_0.c so_long.c ft_split.c GNL/get_next_line_utils.c GNL/get_next_line.c\
+
+OBJ = $(SRC:.c=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+clean:
+	rm -f $(OBJ)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
