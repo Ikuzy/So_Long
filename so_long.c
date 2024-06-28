@@ -6,49 +6,59 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:26:52 by ozouine           #+#    #+#             */
-/*   Updated: 2024/06/28 16:30:12 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/06/28 18:57:41 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void main_helper(char **map, size_t i, char *join)
+{
+	if (join == NULL)
+		closenkill("empty Map File", 1);
+	map = malloc (sizeof (char*) * i);
+	map = ft_split(join, '\n');
+	line_len(map, i);
+	check_borders(map, i);
+	check_comp(map, i);
+	count_comp(map, i);
+	printf ("%s\n", join);
+	free(join);
+}
+
 int main(int ac, char **av)
 {
 	if (ac == 2)
 	{
+		void	*mlx;
+		void	*mlx_win;
     	char	**map;
-		char	*join = NULL;
-		size_t		i = 0;
-		char	*tmp1;
-		char	*tmp;
-		char	*tmp2;
-		int fd = open(av[1], O_RDONLY);
+		char	*join;
+		size_t	i;
+		char	*get_line;
+		char	*free_join;
+		char	*free_line;
+		int		fd;
 
-		tmp1 = get_next_line(fd);
-		while (tmp1 != NULL)
+		i = 0;
+		map = NULL;
+		join = NULL;
+		fd = open(av[1], O_RDONLY);
+		get_line = get_next_line(fd);
+		while (get_line != NULL)
 		{
-			tmp = join;
-			tmp2 = tmp1;
-			join = ft_strjoin(join, tmp1);
-			tmp1 = get_next_line(fd);
-			free(tmp2);
-			free(tmp);
+			free_join = join;
+			free_line = get_line;
+			join = ft_strjoin(join, get_line);
+			get_line = get_next_line(fd);
+			free(free_line);
+			free(free_join);
 			i++;
 		}
-		printf("%s\n", join);
-		if (join == NULL)
-			closenkill("empty Map File", 1);
-		map = malloc (sizeof (char*) * i);
-		map = ft_split(join, '\n');
-		// while (*map != NULL)
-		// {
-		// 	printf("%s\n\n", *map);
-		// 	map++;
-		// }
-		
-		line_len(map, i);
-		check_borders(map, i);
-		free (join);
+		main_helper(map, i, join);
+		mlx = mlx_init();
+		mlx_win = mlx_new_window(mlx, 500, 250, "Hello world!");
+		mlx_loop(mlx);
 		ft_free(map, i);
 	}
 }

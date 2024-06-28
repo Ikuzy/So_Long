@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:27:27 by ozouine           #+#    #+#             */
-/*   Updated: 2024/06/28 16:35:55 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/06/28 18:03:37 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	line_len(char **map, size_t i)
 
 	j = 0;
 	len = ft_strlen(map[0]);
+	if (len == 0)
+		closenkill("Empty Map File", 1);
 	while (j < i)
 	{
 		if (ft_strlen(map[j]) != len)
@@ -48,10 +50,60 @@ void	check_borders(char **map, size_t i)
 		j++;
 	}
 	j = 0;
-	while (j < i)
+	while (map[j] && j < i)
 	{
 		if (map[j][0] != '1' || map[j][ft_strlen(map[j]) - 1] != '1')
 			closenkill("Invalid Map Border", 1);
+		j++;
+	}
+}
+
+void	check_comp(char **map, size_t i)
+{
+	size_t	len;
+	size_t	j;
+	size_t	c;
+	
+	len = ft_strlen(map[0]);
+	j = 0;
+	while (j < i)
+	{
+		c = 0;
+		while (c < len)
+		{
+			if (map[j][c] != '1' && map[j][c] != '0' && map[j][c] != 'P' && map[j][c] != 'E' && map[j][c] != 'C' )
+				closenkill("Invalid Character", 1);
+			c++;
+		}
+		j++;
+	}
+}
+
+void	count_comp(char **map, size_t i)
+{
+	size_t	j;
+	size_t	c;
+	size_t	len;
+	size_t	P_count;
+	size_t	E_count;
+
+	len = ft_strlen(map[0]);
+	j = 0;
+	P_count = 0;
+	E_count = 0;
+	while (j < i)
+	{
+		c = 0;
+		while (c < len)
+		{
+			if (map[j][c] == 'P')
+				P_count++;
+			else if (map[j][c] == 'E')
+				E_count++;
+			if (P_count > 1 || E_count > 1)
+				closenkill("There is Multiple players And/Or Exits", 1);
+			c++;
+		}
 		j++;
 	}
 }

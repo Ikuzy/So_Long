@@ -11,7 +11,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) MLX/libmlx.a  -L/usr/lib -lX11 -lXext -o $(NAME)
 clean:
 	rm -f $(OBJ)
 
