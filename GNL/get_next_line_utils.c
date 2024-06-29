@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:31:29 by ozouine           #+#    #+#             */
-/*   Updated: 2024/06/28 15:57:34 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/06/29 17:29:00 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,13 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (ft_strdup(s2));
 	if (!s2)
 		return (ft_strdup(s1));
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
+	s1_len = ft_strlen1(s1);
+	s2_len = ft_strlen1(s2);
 	str = malloc((s1_len + s2_len + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	ft_strcpy(str, (char *)s1);
 	ft_strcat(str, s2);
-	// free(s1);
 	return (str);
 }
 
@@ -90,7 +89,7 @@ char	*ft_strdup(const char *s)
 	int		i;
 
 	i = 0;
-	len = ft_strlen(s);
+	len = ft_strlen1(s);
 	str = malloc(len + 1);
 	if (!str)
 		return (NULL);

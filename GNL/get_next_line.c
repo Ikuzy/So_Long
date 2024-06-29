@@ -6,13 +6,13 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:31:07 by ozouine           #+#    #+#             */
-/*   Updated: 2024/06/28 15:56:28 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/06/29 17:29:13 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen1(const char *str)
 {
 	size_t	i;
 
@@ -91,7 +91,7 @@ char	*line_remover(char *str)
 		i++;
 	if (str[i] == '\n')
 		i++;
-	holder = malloc(ft_strlen(str) - i + 1);
+	holder = malloc(ft_strlen1(str) - i + 1);
 	if (!holder)
 		return (free(str), NULL);
 	j = 0;

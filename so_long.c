@@ -6,59 +6,62 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:26:52 by ozouine           #+#    #+#             */
-/*   Updated: 2024/06/28 18:57:41 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/06/29 19:15:25 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void main_helper(char **map, size_t i, char *join)
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	**main_helper(char **map, int i, char *join)
 {
 	if (join == NULL)
 		closenkill("empty Map File", 1);
-	map = malloc (sizeof (char*) * i);
 	map = ft_split(join, '\n');
 	line_len(map, i);
 	check_borders(map, i);
 	check_comp(map, i);
 	count_comp(map, i);
-	printf ("%s\n", join);
 	free(join);
+	return (map);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
+	t_mlx	lbx;
+	t_var	v;
+	
 	if (ac == 2)
 	{
-		void	*mlx;
-		void	*mlx_win;
-    	char	**map;
-		char	*join;
-		size_t	i;
-		char	*get_line;
-		char	*free_join;
-		char	*free_line;
-		int		fd;
-
-		i = 0;
-		map = NULL;
-		join = NULL;
-		fd = open(av[1], O_RDONLY);
-		get_line = get_next_line(fd);
-		while (get_line != NULL)
+		v.i = 0;
+		v.join = NULL;
+		v.fd = open(av[1], O_RDONLY);
+		v.get_line = get_next_line(v.fd);
+		while (v.get_line != NULL)
 		{
-			free_join = join;
-			free_line = get_line;
-			join = ft_strjoin(join, get_line);
-			get_line = get_next_line(fd);
-			free(free_line);
-			free(free_join);
-			i++;
+			v.free_j = v.join;
+			v.free_l = v.get_line;
+			v.join = ft_strjoin(v.join, v.get_line);
+			v.get_line = get_next_line(v.fd);
+			free(v.free_l);
+			free(v.free_j);
+			v.i++;
 		}
-		main_helper(map, i, join);
-		mlx = mlx_init();
-		mlx_win = mlx_new_window(mlx, 500, 250, "Hello world!");
-		mlx_loop(mlx);
-		ft_free(map, i);
+		lbx.map = main_helper(lbx.map, v.i, v.join);
+		lbx.mlx = mlx_init();
+		lbx.mlx_win = mlx_new_window(lbx.mlx, ft_strlen(lbx.map[0]) * 30, v.i * 30 , "So_long");
+		convert_img(&lbx);
+		draw_map(&lbx, 0, 0);
+		mlx_loop(lbx.mlx);
+		ft_free(lbx.map, v.i);
 	}
 }

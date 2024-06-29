@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:27:02 by ozouine           #+#    #+#             */
-/*   Updated: 2024/06/28 18:55:36 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/06/29 19:15:20 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,44 @@
 # include "GNL/get_next_line.h"
 # include "MLX/mlx.h"
 
-// typedef struct t_v
-// {
-//     	size_t	i;
-// 		char	*get_line;
-// 		char	*free_join;
-// 		char	*free_line;
-// 		int		fd;
-// }s_v;
+typedef struct s_var
+{
+	char	*join;
+	size_t	i;
+	char	*get_line;
+	char	*free_j;
+	char	*free_l;
+	int		fd;
+	int	j;
+	int	c;
+	int	len;
+	int	p_count;
+	int	e_count;
+	int c_count;
+}	t_var;
 
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*mlx_win;
+	char	**map;
+	void	*player;
+	void	*ground;
+	void	*wall;
+	void	*exit;
+	void	*coll;
+}	t_mlx;
 
 char	**ft_free(char **s, int j);
 char	**ft_split(char const *s, char c);
 void	closenkill(char *str, int i);
-void	line_len(char **map, size_t i);
-void	check_borders(char **map, size_t i);
-void	check_comp(char **map, size_t i);
-void	count_comp(char **map, size_t i);
-void main_helper(char **map, size_t i, char *join);
-
+void	line_len(char **map, int i);
+void	check_borders(char **map, int i);
+void	check_comp(char **map, int i);
+void	count_comp(char **map, int i);
+char	**main_helper(char **map, int i, char *join);
+int		ft_strlen(char *str);
+void	convert_img(t_mlx *lbx);
+void	draw_map(t_mlx *lbx, int i, int j);
 
 #endif
