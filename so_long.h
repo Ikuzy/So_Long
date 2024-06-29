@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:27:02 by ozouine           #+#    #+#             */
-/*   Updated: 2024/06/29 19:15:20 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/06/29 21:55:32 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@
 typedef struct s_var
 {
 	char	*join;
-	size_t	i;
+	int		i;
 	char	*get_line;
 	char	*free_j;
 	char	*free_l;
 	int		fd;
-	int	j;
-	int	c;
-	int	len;
-	int	p_count;
-	int	e_count;
-	int c_count;
+	int		j;
+	int		c;
+	int		len;
+	int		p_count;
+	int		e_count;
+	int		c_count;
 }	t_var;
 
 typedef struct s_mlx

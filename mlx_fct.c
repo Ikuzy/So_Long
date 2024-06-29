@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 15:29:03 by ozouine           #+#    #+#             */
-/*   Updated: 2024/06/29 18:59:57 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/06/29 21:42:35 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,20 @@ void	convert_img(t_mlx *lbx)
 	int	height;
 
 	lbx->ground = mlx_xpm_file_to_image(lbx->mlx, "images/ground.xpm",&width, &height);
+	if (lbx->ground == NULL)
+		closenkill("Ground Xpm File Not found", 1);
 	lbx->coll = mlx_xpm_file_to_image(lbx->mlx, "images/diamond.xpm",&width, &height);
+	if (lbx->coll == NULL)
+		closenkill("Collectible Xpm File Not found", 1);
 	lbx->player = mlx_xpm_file_to_image(lbx->mlx, "images/player.xpm",&width, &height);
+	if (lbx->player == NULL)
+		closenkill("Player Xpm File Not found", 1);
 	lbx->exit = mlx_xpm_file_to_image(lbx->mlx, "images/closed_exit.xpm",&width, &height);
+	if (lbx->exit == NULL)
+		closenkill("Exit Xpm File Not found", 1);
 	lbx->wall = mlx_xpm_file_to_image(lbx->mlx, "images/wall.xpm",&width, &height);
+	if (lbx->wall == NULL)
+		closenkill("Wall Xpm File Not found", 1);
 }
 
 void	draw_map(t_mlx *lbx, int i, int j)
