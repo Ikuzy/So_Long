@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:27:02 by ozouine           #+#    #+#             */
-/*   Updated: 2024/06/29 21:55:32 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/01 22:44:04 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ typedef struct s_mlx
 	void	*wall;
 	void	*exit;
 	void	*coll;
+	int		count_mv;
+	int		count_coll;
+	int		xp;
+	int		yp;
+	int		ip;
+	int		jp;
+	
 }	t_mlx;
 
 char	**ft_free(char **s, int j);
