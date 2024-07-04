@@ -6,20 +6,20 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:37:46 by ozouine           #+#    #+#             */
-/*   Updated: 2024/06/28 21:05:15 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/04 20:00:52 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	**ft_free(char **s, int j)
+char	**ft_free(char **s)
 {
 	int	i;
 
 	i = 0;
 	if (!s)
 		return (NULL);
-	while (i < j)
+	while (s[i])
 	{
 		free(s[i]);
 		i++;
@@ -79,7 +79,7 @@ char	**sub_split(char const *s, char c, char **strs)
 		{
 			strs[i] = alloc_w((char *)s, c);
 			if (strs[i] == NULL)
-				return (ft_free(strs, i));
+				return (ft_free(strs));
 			i++;
 			while (*s && *s != c)
 				s++;

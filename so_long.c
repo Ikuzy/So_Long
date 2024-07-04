@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:26:52 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/04 17:26:24 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/04 20:34:30 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	**main_helper(char **map, int i, char *join)
+void	main_helper(t_mlx *lbx, int i, char *join)
 {
 	if (join == NULL)
-		closenkill("empty Map File", 1);
-	map = ft_split(join, '\n');
-	line_len(map, i);
-	check_borders(map, i);
-	check_comp(map, i);
-	count_comp(map, i);
+		closenkill(lbx, "empty Map File", 1);
+	lbx->map = ft_split(join, '\n');
+	lbx->map_dup = ft_split(join, '\n');
+	line_len(lbx, lbx->map, i);
+	check_borders(lbx, lbx->map, i);
+	check_comp(lbx, lbx->map, i);
+	count_comp(lbx, lbx->map, i);
 	free(join);
-	return (map);
 }
 void	innit(t_mlx *lbx, t_var *v, char *str)
 {
@@ -62,14 +62,18 @@ int	main(int ac, char **av)
 	if (ac == 2)
 	{
 		innit(&lbx, &v, av[1]); 
-		lbx.map = main_helper(lbx.map, v.i, v.join);
-		lbx.mlx = mlx_init();
-		lbx.mlx_win = mlx_new_window(lbx.mlx, ft_strlen (lbx.map[0]) * 30, v.i * 30, "So_long");
+		main_helper(&lbx, v.i, v.join);
 		count_colls(&lbx);
+		ft_validate_path(&lbx, v.i);
+		lbx.mlx = mlx_init();
+		if (lbx.mlx == NULL)
+			return (1);
+		lbx.mlx_win = mlx_new_window(lbx.mlx, ft_strlen (lbx.map[0]) * 30, v.i * 30, "So_long");
 		convert_img(&lbx);
 		draw_map(&lbx, 0, 0);
 		mlx_key_hook(lbx.mlx_win,move_keys,&lbx);
 		mlx_loop(lbx.mlx);
-		ft_free(lbx.map, v.i);
+		ft_free(lbx.map);
+		mlx_destroy_window(lbx.mlx, lbx.mlx_win);
 	}
 }

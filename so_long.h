@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:27:02 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/04 17:17:24 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/04 20:41:58 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_mlx
 	void	*mlx;
 	void	*mlx_win;
 	char	**map;
+	char	**map_dup;
 	void	*player;
 	void	*ground;
 	void	*wall;
@@ -51,14 +52,14 @@ typedef struct s_mlx
 	
 }	t_mlx;
 
-char	**ft_free(char **s, int j);
+char	**ft_free(char **s);
 char	**ft_split(char const *s, char c);
-void	closenkill(char *str, int i);
-void	line_len(char **map, int i);
-void	check_borders(char **map, int i);
-void	check_comp(char **map, int i);
-void	count_comp(char **map, int i);
-char	**main_helper(char **map, int i, char *join);
+void	closenkill(t_mlx *lbx, char *str, int i);
+void	line_len(t_mlx *lbx, char **map, int i);
+void	check_borders(t_mlx *lbx, char **map, int i);
+void	check_comp(t_mlx *lbx, char **map, int i);
+void	count_comp(t_mlx *lbx, char **map, int i);
+void	main_helper(t_mlx *lbx, int i, char *join);
 int		ft_strlen(char *str);
 void	convert_img(t_mlx *lbx);
 void	draw_map(t_mlx *lbx, int i, int j);
@@ -67,5 +68,9 @@ int		move_player(t_mlx *lbx, int yp, int xp);
 int		move_keys(int keycode, t_mlx *lbx);
 void	count_colls(t_mlx *lbx);
 void	innit(t_mlx *lbx, t_var *v, char *str);
+void	ft_floodfill(char **tab, int x, int y, int i, int j);
+void	ft_check_floodfill(t_mlx *lbx, char **map);
+void	ft_validate_path(t_mlx *app, int len);
+
 
 #endif
