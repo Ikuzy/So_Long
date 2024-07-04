@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:07:06 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/01 22:56:21 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/04 17:04:42 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,33 @@
 void	count_moves(t_mlx *lbx)
 {
 	lbx->count_mv++;
+	printf("%d\n", lbx->count_mv);
+	
+}
+void	count_colls(t_mlx *lbx)
+{
+	int	s;
+	int	x;
+	lbx->count_coll = 0;
+
+	s = 0;
+	while (lbx->map[s])
+	{
+		x = 0;
+		while (lbx->map[s][x])
+		{
+			if (lbx->map[s][x] == 'C')
+			{
+				lbx->count_coll++;
+			}
+			x++;
+		}
+		s++;
+	}
+	
 }
 
-void	player_position(t_mlx *lbx)
+void	player_position(t_mlx *lbx, int *a, int *b)
 {
 	int	s;
 	int	x;
@@ -30,11 +54,9 @@ void	player_position(t_mlx *lbx)
 		{
 			if (lbx->map[s][x] == 'P')
 			{
-				lbx->ip = s;
-				lbx->jp = x;
+				*a = s;
+				*b = x;
 			}
-			else if (lbx->map[s][x] == 'C')
-				lbx->count_coll++;
 			x++;
 		}
 		s++;
@@ -42,40 +64,51 @@ void	player_position(t_mlx *lbx)
 	
 }
 
-int	move_player(t_mlx *lbx)
+int	move_player(t_mlx *lbx, int yp, int xp)
 {
-	player_position(lbx);
-	if (lbx->map[lbx->ip + lbx->yp][lbx->jp + lbx->xp] == '1')
+	int a;
+	int b;
+	
+	a = 0;
+	b = 0;
+	player_position(lbx, &a, &b);
+	if (lbx->map[a + yp][b + xp] == '1')
 		return (0);
-	else if (lbx->map[lbx->ip + lbx->yp][lbx->jp + lbx->xp] == 'C')
+	else if (lbx->map[a + yp][b + xp] == 'C')
+	{
+		lbx->count_coll--;
 		count_moves(lbx);
-	else if (lbx->map[lbx->ip + lbx->yp][lbx->jp + lbx->xp] == 'E' && lbx->count_coll != 0)
+	}
+	else if (lbx->map[a + yp][b + xp] == 'E' && lbx->count_coll != 0)
 		return (0);
-	else if (lbx->map[lbx->ip + lbx->yp][lbx->jp + lbx->xp] == 'E'  && lbx->count_coll != 0)
+	else if (lbx->map[a + yp][b + xp] == 'E'  && lbx->count_coll == 0)
 	{
 		count_moves(lbx);
 		printf("congrats you won\n");
+		exit (0);
 	}
-	lbx->map[lbx->ip][lbx->jp] = '0';
-	lbx->map[lbx->ip + lbx->yp][lbx->jp + lbx->xp] = 'P';
+	lbx->map[a][b] = '0';
+	lbx->map[a + yp][b + xp] = 'P';
 	mlx_clear_window(lbx->mlx, lbx->mlx_win);
-	if (lbx->yp != 0 || lbx->xp != 0)
+	if (yp != 0 || xp != 0)
 		count_moves(lbx);
-	
+	return (0);
 }
 
-int	move_keys(int keycode, t_mlx *lbx)
+int move_keys(int keycode, t_mlx *lbx)
 {
-    lbx->yp = 0;
-    lbx->xp = 0;
+    int yp = 0;
+    int xp = 0;
     if (keycode == 65362 || keycode == 119)
-        lbx->yp = -1;
+        yp = -1;
     else if (keycode == 65364 || keycode == 115)
-        lbx->yp = 1;
+        yp = 1;
     else if (keycode == 65363 || keycode == 100)
-        lbx->xp = 1;
+        xp = 1;
     else if (keycode == 65361 || keycode == 97)
-        lbx->xp = -1;
-	
+        xp = -1;
+    move_player(lbx, yp, xp);
+    draw_map(lbx, 0, 0);
     
+    return 0;
 }

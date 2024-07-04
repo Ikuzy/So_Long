@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:27:02 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/01 22:44:04 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/04 17:17:24 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,6 @@ typedef struct s_mlx
 	void	*coll;
 	int		count_mv;
 	int		count_coll;
-	int		xp;
-	int		yp;
-	int		ip;
-	int		jp;
 	
 }	t_mlx;
 
@@ -66,5 +62,10 @@ char	**main_helper(char **map, int i, char *join);
 int		ft_strlen(char *str);
 void	convert_img(t_mlx *lbx);
 void	draw_map(t_mlx *lbx, int i, int j);
+void	player_position(t_mlx *lbx, int *i, int *j);
+int		move_player(t_mlx *lbx, int yp, int xp);
+int		move_keys(int keycode, t_mlx *lbx);
+void	count_colls(t_mlx *lbx);
+void	innit(t_mlx *lbx, t_var *v, char *str);
 
 #endif
