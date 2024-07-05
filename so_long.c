@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:26:52 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/04 20:34:30 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/05 20:07:18 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
+void	destroy(t_mlx *lbx)
+{
+	mlx_destroy_image(lbx->mlx, lbx->ground);
+	mlx_destroy_image(lbx->mlx, lbx->player);
+	mlx_destroy_image(lbx->mlx, lbx->wall);
+	mlx_destroy_image(lbx->mlx, lbx->coll);
+	mlx_destroy_image(lbx->mlx, lbx->exit);
+	mlx_clear_window(lbx->mlx, lbx->mlx_win);
+	mlx_destroy_window(lbx->mlx, lbx->mlx_win);
+	mlx_destroy_display(lbx->mlx);
+	free(lbx->mlx);
+	ft_free(lbx->map);
+}
+
 void	main_helper(t_mlx *lbx, int i, char *join)
 {
 	if (join == NULL)
@@ -34,6 +48,7 @@ void	main_helper(t_mlx *lbx, int i, char *join)
 	count_comp(lbx, lbx->map, i);
 	free(join);
 }
+
 void	innit(t_mlx *lbx, t_var *v, char *str)
 {
 	v->i = 0;
@@ -61,19 +76,21 @@ int	main(int ac, char **av)
 
 	if (ac == 2)
 	{
-		innit(&lbx, &v, av[1]); 
+		innit(&lbx, &v, av[1]);
 		main_helper(&lbx, v.i, v.join);
+		lbx.i = v.i;
+		lbx.j = ft_strlen(lbx.map[0]);
 		count_colls(&lbx);
-		ft_validate_path(&lbx, v.i);
+		ft_validate_path(&lbx);
 		lbx.mlx = mlx_init();
 		if (lbx.mlx == NULL)
 			return (1);
-		lbx.mlx_win = mlx_new_window(lbx.mlx, ft_strlen (lbx.map[0]) * 30, v.i * 30, "So_long");
+		lbx.mlx_win = mlx_new_window(lbx.mlx, ft_strlen(lbx.map[0]) * 30, v.i
+				* 30, "So_long");
 		convert_img(&lbx);
 		draw_map(&lbx, 0, 0);
-		mlx_key_hook(lbx.mlx_win,move_keys,&lbx);
+		mlx_key_hook(lbx.mlx_win, move_keys, &lbx);
 		mlx_loop(lbx.mlx);
-		ft_free(lbx.map);
-		mlx_destroy_window(lbx.mlx, lbx.mlx_win);
+		destroy(&lbx);
 	}
 }

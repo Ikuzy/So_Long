@@ -2,7 +2,7 @@ NAME = so_long
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
 
 SRC = parce_0.c so_long.c ft_split.c GNL/get_next_line_utils.c\
 	 GNL/get_next_line.c mlx_fct.c player_movement.c floodfill.c\

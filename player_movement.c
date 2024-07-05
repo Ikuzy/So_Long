@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:07:06 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/04 17:04:42 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/05 19:59:20 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	count_moves(t_mlx *lbx)
 {
 	lbx->count_mv++;
 	printf("%d\n", lbx->count_mv);
-	
 }
+
 void	count_colls(t_mlx *lbx)
 {
 	int	s;
 	int	x;
-	lbx->count_coll = 0;
 
+	lbx->count_coll = 0;
 	s = 0;
 	while (lbx->map[s])
 	{
@@ -38,7 +38,6 @@ void	count_colls(t_mlx *lbx)
 		}
 		s++;
 	}
-	
 }
 
 void	player_position(t_mlx *lbx, int *a, int *b)
@@ -61,14 +60,13 @@ void	player_position(t_mlx *lbx, int *a, int *b)
 		}
 		s++;
 	}
-	
 }
 
 int	move_player(t_mlx *lbx, int yp, int xp)
 {
-	int a;
-	int b;
-	
+	int	a;
+	int	b;
+
 	a = 0;
 	b = 0;
 	player_position(lbx, &a, &b);
@@ -81,12 +79,8 @@ int	move_player(t_mlx *lbx, int yp, int xp)
 	}
 	else if (lbx->map[a + yp][b + xp] == 'E' && lbx->count_coll != 0)
 		return (0);
-	else if (lbx->map[a + yp][b + xp] == 'E'  && lbx->count_coll == 0)
-	{
-		count_moves(lbx);
-		printf("congrats you won\n");
-		exit (0);
-	}
+	else if (lbx->map[a + yp][b + xp] == 'E' && lbx->count_coll == 0)
+		return (count_moves(lbx), printf("congrats you won\n"), exit(0), 0);
 	lbx->map[a][b] = '0';
 	lbx->map[a + yp][b + xp] = 'P';
 	mlx_clear_window(lbx->mlx, lbx->mlx_win);
@@ -95,20 +89,22 @@ int	move_player(t_mlx *lbx, int yp, int xp)
 	return (0);
 }
 
-int move_keys(int keycode, t_mlx *lbx)
+int	move_keys(int keycode, t_mlx *lbx)
 {
-    int yp = 0;
-    int xp = 0;
-    if (keycode == 65362 || keycode == 119)
-        yp = -1;
-    else if (keycode == 65364 || keycode == 115)
-        yp = 1;
-    else if (keycode == 65363 || keycode == 100)
-        xp = 1;
-    else if (keycode == 65361 || keycode == 97)
-        xp = -1;
-    move_player(lbx, yp, xp);
-    draw_map(lbx, 0, 0);
-    
-    return 0;
+	int	yp;
+	int	xp;
+
+	yp = 0;
+	xp = 0;
+	if (keycode == 65362 || keycode == 119)
+		yp = -1;
+	else if (keycode == 65364 || keycode == 115)
+		yp = 1;
+	else if (keycode == 65363 || keycode == 100)
+		xp = 1;
+	else if (keycode == 65361 || keycode == 97)
+		xp = -1;
+	move_player(lbx, yp, xp);
+	draw_map(lbx, 0, 0);
+	return (0);
 }

@@ -6,46 +6,44 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 19:21:41 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/04 20:24:44 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/05 20:10:54 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_floodfill(char **tab, int x, int y, int i, int j)
+void	ft_floodfill(t_mlx *lbx, int x, int y)
 {
-	if (x < 0 || y < 0 || x >= i || y >= j) 
-        return;
-	if (tab[x][y] == '1' || tab[x][y] == 'O' )
-		return;
-	if(tab[x][y] == 'E' )
+	if (x < 0 || y < 0 || x >= lbx->i || y >= lbx->j)
+		return ;
+	if (lbx->map_dup[x][y] == '1' || lbx->map_dup[x][y] == 'O')
+		return ;
+	if (lbx->map_dup[x][y] == 'E')
 	{
-		tab[x][y] = 'O';
+		lbx->map_dup[x][y] = 'O';
 		return ;
 	}
-		
-	
-	tab[x][y] = 'O';
-	ft_floodfill(tab, (x + 1), y, i, j);
-	ft_floodfill(tab, (x - 1), y, i, j);
-	ft_floodfill(tab, x, (y + 1), i, j);
-	ft_floodfill(tab, x, (y - 1), i, j);
+	lbx->map_dup[x][y] = 'O';
+	ft_floodfill(lbx, (x + 1), y);
+	ft_floodfill(lbx, (x - 1), y);
+	ft_floodfill(lbx, x, (y + 1));
+	ft_floodfill(lbx, x, (y - 1));
 }
 
-void ft_check_floodfill(t_mlx *lbx, char **map)
+void	ft_check_floodfill(t_mlx *lbx, char **map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
-	while(map[i])
+	while (map[i])
 	{
 		j = 0;
-		while(map[i][j])
+		while (map[i][j])
 		{
-			if(map[i][j] == 'E')
+			if (map[i][j] == 'E')
 				closenkill(lbx, "Player can't reach the Exit", 1);
-			else if(map[i][j] == 'C')
+			else if (map[i][j] == 'C')
 				closenkill(lbx, "Player can't reach all Collectibles", 1);
 			j++;
 		}
@@ -53,14 +51,12 @@ void ft_check_floodfill(t_mlx *lbx, char **map)
 	}
 }
 
-void	ft_validate_path(t_mlx *lbx, int len)
+void	ft_validate_path(t_mlx *lbx)
 {
 	int	x;
 	int	y;
-	int	k;
-    
-	k = ft_strlen(lbx->map_dup[0]);
-	player_position(lbx , &x, &y);
-	ft_floodfill(lbx->map_dup, 1, 2, len, k);
+
+	player_position(lbx, &x, &y);
+	ft_floodfill(lbx, 1, 2);
 	ft_check_floodfill(lbx, lbx->map_dup);
 }

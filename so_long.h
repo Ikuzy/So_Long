@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:27:02 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/04 20:41:58 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/05 20:10:04 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_var
 	int		p_count;
 	int		e_count;
 	int		c_count;
-}	t_var;
+}			t_var;
 
 typedef struct s_mlx
 {
@@ -47,30 +47,32 @@ typedef struct s_mlx
 	void	*wall;
 	void	*exit;
 	void	*coll;
+	int		i;
+	int		j;
 	int		count_mv;
 	int		count_coll;
-	
-}	t_mlx;
 
-char	**ft_free(char **s);
-char	**ft_split(char const *s, char c);
-void	closenkill(t_mlx *lbx, char *str, int i);
-void	line_len(t_mlx *lbx, char **map, int i);
-void	check_borders(t_mlx *lbx, char **map, int i);
-void	check_comp(t_mlx *lbx, char **map, int i);
-void	count_comp(t_mlx *lbx, char **map, int i);
-void	main_helper(t_mlx *lbx, int i, char *join);
-int		ft_strlen(char *str);
-void	convert_img(t_mlx *lbx);
-void	draw_map(t_mlx *lbx, int i, int j);
-void	player_position(t_mlx *lbx, int *i, int *j);
-int		move_player(t_mlx *lbx, int yp, int xp);
-int		move_keys(int keycode, t_mlx *lbx);
-void	count_colls(t_mlx *lbx);
-void	innit(t_mlx *lbx, t_var *v, char *str);
-void	ft_floodfill(char **tab, int x, int y, int i, int j);
-void	ft_check_floodfill(t_mlx *lbx, char **map);
-void	ft_validate_path(t_mlx *app, int len);
+}			t_mlx;
 
+char		**ft_free(char **s);
+char		**ft_split(char const *s, char c);
+void		closenkill(t_mlx *lbx, char *str, int i);
+void		line_len(t_mlx *lbx, char **map, int i);
+void		check_borders(t_mlx *lbx, char **map, int i);
+void		check_comp(t_mlx *lbx, char **map, int i);
+void		count_comp(t_mlx *lbx, char **map, int i);
+void		main_helper(t_mlx *lbx, int i, char *join);
+int			ft_strlen(char *str);
+void		convert_img(t_mlx *lbx);
+void		draw_map(t_mlx *lbx, int i, int j);
+void		player_position(t_mlx *lbx, int *i, int *j);
+int			move_player(t_mlx *lbx, int yp, int xp);
+int			move_keys(int keycode, t_mlx *lbx);
+void		count_colls(t_mlx *lbx);
+void		innit(t_mlx *lbx, t_var *v, char *str);
+void		ft_floodfill(t_mlx *lbx, int x, int y);
+void		ft_check_floodfill(t_mlx *lbx, char **map);
+void		ft_validate_path(t_mlx *app);
+void		destroy(t_mlx *lbx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:27:27 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/04 20:41:13 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/05 13:29:04 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 void	closenkill(t_mlx *lbx, char *str, int i)
 {
 	printf("%s\n", str);
-	if (lbx->map != NULL || lbx->map_dup != NULL)
-	{
+	if (lbx->map != NULL)
 		ft_free(lbx->map);
+	if (lbx->map_dup != NULL)
 		ft_free(lbx->map_dup);
-	}
 	exit(i);
 }
 
@@ -75,8 +74,8 @@ void	check_comp(t_mlx *lbx, char **map, int i)
 		c = 0;
 		while (c < len)
 		{
-			if (map[j][c] != '1' && map[j][c] != '0' && map[j][c] != 'P' &&
-				map[j][c] != 'E' && map[j][c] != 'C' )
+			if (map[j][c] != '1' && map[j][c] != '0' && map[j][c] != 'P'
+				&& map[j][c] != 'E' && map[j][c] != 'C')
 				closenkill(lbx, "Invalid Character", 1);
 			c++;
 		}
