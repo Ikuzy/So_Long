@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 19:21:41 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/05 20:10:54 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/19 18:33:37 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_floodfill(t_mlx *lbx, int x, int y)
 	ft_floodfill(lbx, x, (y - 1));
 }
 
-void	ft_check_floodfill(t_mlx *lbx, char **map)
+void	ft_check_floodfill(t_mlx *lbx, char **map, t_var *v)
 {
 	int	i;
 	int	j;
@@ -42,21 +42,21 @@ void	ft_check_floodfill(t_mlx *lbx, char **map)
 		while (map[i][j])
 		{
 			if (map[i][j] == 'E')
-				closenkill(lbx, "Player can't reach the Exit", 1);
+				closenkill(lbx, "Player can't reach the Exit", 1, v);
 			else if (map[i][j] == 'C')
-				closenkill(lbx, "Player can't reach all Collectibles", 1);
+				closenkill(lbx, "Player can't reach all Collectibles", 1, v);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	ft_validate_path(t_mlx *lbx)
+void	ft_validate_path(t_mlx *lbx, t_var *v)
 {
 	int	x;
 	int	y;
 
 	player_position(lbx, &x, &y);
-	ft_floodfill(lbx, 1, 2);
-	ft_check_floodfill(lbx, lbx->map_dup);
+	ft_floodfill(lbx, x, y);
+	ft_check_floodfill(lbx, lbx->map_dup, v);
 }

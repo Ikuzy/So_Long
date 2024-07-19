@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:07:06 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/05 19:59:20 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/19 18:31:55 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,15 @@ int	move_player(t_mlx *lbx, int yp, int xp)
 	return (0);
 }
 
-int	move_keys(int keycode, t_mlx *lbx)
+int	move_keys(int keycode, t_mlx *lbx, t_var *v)
 {
 	int	yp;
 	int	xp;
 
 	yp = 0;
 	xp = 0;
+	if (keycode == 65307)
+		closenkill(lbx, "you quit the game", 0, v);
 	if (keycode == 65362 || keycode == 119)
 		yp = -1;
 	else if (keycode == 65364 || keycode == 115)

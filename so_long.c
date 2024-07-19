@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:26:52 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/05 20:07:18 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/19 18:34:40 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,21 @@ void	destroy(t_mlx *lbx)
 	mlx_clear_window(lbx->mlx, lbx->mlx_win);
 	mlx_destroy_window(lbx->mlx, lbx->mlx_win);
 	mlx_destroy_display(lbx->mlx);
-	free(lbx->mlx);
 	ft_free(lbx->map);
+	ft_free(lbx->map_dup);
+	free(lbx->mlx);
 }
 
-void	main_helper(t_mlx *lbx, int i, char *join)
+void	main_helper(t_mlx *lbx, int i, char *join, t_var *v)
 {
 	if (join == NULL)
-		closenkill(lbx, "empty Map File", 1);
+		closenkill(lbx, "empty Map File", 1, v);
 	lbx->map = ft_split(join, '\n');
 	lbx->map_dup = ft_split(join, '\n');
-	line_len(lbx, lbx->map, i);
-	check_borders(lbx, lbx->map, i);
-	check_comp(lbx, lbx->map, i);
-	count_comp(lbx, lbx->map, i);
+	line_len(lbx, lbx->map, i, v);
+	check_borders(lbx, lbx->map, i, v);
+	check_comp(lbx, lbx->map, i, v);
+	count_comp(lbx, lbx->map, i, v);
 	free(join);
 }
 
@@ -67,6 +68,7 @@ void	innit(t_mlx *lbx, t_var *v, char *str)
 		free(v->free_j);
 		v->i++;
 	}
+	close(v->fd);
 }
 
 int	main(int ac, char **av)
@@ -77,17 +79,17 @@ int	main(int ac, char **av)
 	if (ac == 2)
 	{
 		innit(&lbx, &v, av[1]);
-		main_helper(&lbx, v.i, v.join);
+		main_helper(&lbx, v.i, v.join, &v);
 		lbx.i = v.i;
 		lbx.j = ft_strlen(lbx.map[0]);
 		count_colls(&lbx);
-		ft_validate_path(&lbx);
+		ft_validate_path(&lbx, &v);
 		lbx.mlx = mlx_init();
 		if (lbx.mlx == NULL)
 			return (1);
 		lbx.mlx_win = mlx_new_window(lbx.mlx, ft_strlen(lbx.map[0]) * 30, v.i
 				* 30, "So_long");
-		convert_img(&lbx);
+		convert_img(&lbx, &v);
 		draw_map(&lbx, 0, 0);
 		mlx_key_hook(lbx.mlx_win, move_keys, &lbx);
 		mlx_loop(lbx.mlx);
