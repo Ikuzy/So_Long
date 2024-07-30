@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:27:02 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/30 15:11:24 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:55:14 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "GNL/get_next_line.h"
+# include "ft_printf/ft_printf.h"
 # include "MLX/mlx.h"
 
 typedef struct s_var

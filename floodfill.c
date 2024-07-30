@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 19:21:41 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/30 15:20:40 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:50:11 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	closenkill1(t_mlx *lbx, char *str, int i, t_var *v)
 {
 	(void)v;
-	printf("%s\n", str);
+	ft_printf("%s\n", str);
 	if (lbx->map != NULL)
 		ft_free(lbx->map);
 	if (lbx->map_dup != NULL)

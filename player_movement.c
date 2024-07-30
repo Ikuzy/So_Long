@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:07:06 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/30 15:32:02 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:50:42 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	count_moves(t_mlx *lbx)
 {
 	lbx->count_mv++;
-	printf("%d\n", lbx->count_mv);
+	ft_printf("%d\n", lbx->count_mv);
 }
 
 void	count_colls(t_mlx *lbx)

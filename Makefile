@@ -12,12 +12,15 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) ./MLX/libmlx.a  -L/usr/lib -lX11 -lXext -o $(NAME)
+	make -C ft_printf
+	$(CC) $(CFLAGS) $(OBJ) ./ft_printf/libftprintf.a ./MLX/libmlx.a  -L/usr/lib -lX11 -lXext -o $(NAME)
 clean:
 	rm -f $(OBJ)
+	make clean -C ft_printf
 
 fclean: clean
 	rm -f $(NAME)
+	make fclean -C ft_printf
 
 re: fclean all
 .SECONDARY: $(OBJ)
