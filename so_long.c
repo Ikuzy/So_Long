@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:26:52 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/19 18:34:40 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:19:06 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,24 @@ void	destroy(t_mlx *lbx)
 	mlx_destroy_window(lbx->mlx, lbx->mlx_win);
 	mlx_destroy_display(lbx->mlx);
 	ft_free(lbx->map);
+	lbx->map = NULL;
 	ft_free(lbx->map_dup);
+	lbx->map_dup = NULL;
 	free(lbx->mlx);
 }
 
 void	main_helper(t_mlx *lbx, int i, char *join, t_var *v)
 {
-	if (join == NULL)
-		closenkill(lbx, "empty Map File", 1, v);
 	lbx->map = ft_split(join, '\n');
 	lbx->map_dup = ft_split(join, '\n');
+	if (join == NULL)
+		closenkill(lbx, "empty Map File", 1, v);
 	line_len(lbx, lbx->map, i, v);
 	check_borders(lbx, lbx->map, i, v);
 	check_comp(lbx, lbx->map, i, v);
 	count_comp(lbx, lbx->map, i, v);
 	free(join);
+	join = NULL;
 }
 
 void	innit(t_mlx *lbx, t_var *v, char *str)
@@ -87,12 +90,14 @@ int	main(int ac, char **av)
 		lbx.mlx = mlx_init();
 		if (lbx.mlx == NULL)
 			return (1);
+		if ((v.i * 30) > 1080 || (ft_strlen(lbx.map[0]) * 30) > 1920)
+			closenkill(&lbx, "Map is Too Big\n", 1, &v);
 		lbx.mlx_win = mlx_new_window(lbx.mlx, ft_strlen(lbx.map[0]) * 30, v.i
 				* 30, "So_long");
 		convert_img(&lbx, &v);
 		draw_map(&lbx, 0, 0);
+		mlx_hook(lbx.mlx_win, 17, 0, ft_exit, &lbx);
 		mlx_key_hook(lbx.mlx_win, move_keys, &lbx);
 		mlx_loop(lbx.mlx);
-		destroy(&lbx);
 	}
 }

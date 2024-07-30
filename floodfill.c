@@ -6,11 +6,29 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 19:21:41 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/19 18:33:37 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:20:40 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	closenkill1(t_mlx *lbx, char *str, int i, t_var *v)
+{
+	(void)v;
+	printf("%s\n", str);
+	if (lbx->map != NULL)
+		ft_free(lbx->map);
+	if (lbx->map_dup != NULL)
+		ft_free(lbx->map_dup);
+	exit(i);
+}
+
+int	ft_exit(t_mlx *lbx, t_var *v)
+{
+	destroy(lbx);
+	closenkill1(lbx, "you quit the game", 0, v);
+	return (0);
+}
 
 void	ft_floodfill(t_mlx *lbx, int x, int y)
 {
@@ -42,9 +60,9 @@ void	ft_check_floodfill(t_mlx *lbx, char **map, t_var *v)
 		while (map[i][j])
 		{
 			if (map[i][j] == 'E')
-				closenkill(lbx, "Player can't reach the Exit", 1, v);
+				closenkill1(lbx, "Player can't reach the Exit", 1, v);
 			else if (map[i][j] == 'C')
-				closenkill(lbx, "Player can't reach all Collectibles", 1, v);
+				closenkill1(lbx, "Player can't reach all Collectibles", 1, v);
 			j++;
 		}
 		i++;

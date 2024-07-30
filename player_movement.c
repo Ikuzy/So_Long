@@ -6,7 +6,7 @@
 /*   By: ozouine <ozouine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:07:06 by ozouine           #+#    #+#             */
-/*   Updated: 2024/07/19 18:31:55 by ozouine          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:32:02 by ozouine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	move_player(t_mlx *lbx, int yp, int xp)
 	else if (lbx->map[a + yp][b + xp] == 'E' && lbx->count_coll != 0)
 		return (0);
 	else if (lbx->map[a + yp][b + xp] == 'E' && lbx->count_coll == 0)
-		return (count_moves(lbx), printf("congrats you won\n"), exit(0), 0);
+		return (count_moves(lbx), printf("congrats you won\n"),
+			destroy(lbx), exit(0), 0);
 	lbx->map[a][b] = '0';
 	lbx->map[a + yp][b + xp] = 'P';
 	mlx_clear_window(lbx->mlx, lbx->mlx_win);
@@ -97,7 +98,10 @@ int	move_keys(int keycode, t_mlx *lbx, t_var *v)
 	yp = 0;
 	xp = 0;
 	if (keycode == 65307)
-		closenkill(lbx, "you quit the game", 0, v);
+	{
+		destroy(lbx);
+		closenkill1(lbx, "you quit the game", 0, v);
+	}
 	if (keycode == 65362 || keycode == 119)
 		yp = -1;
 	else if (keycode == 65364 || keycode == 115)
